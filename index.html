@@ -300,15 +300,12 @@
        /* // Update the X axis
         x.domain(data.map(function(d) { return d.group; }))
         xAxis.call(d3.axisBottom(x))
-
         // Update the Y axis
         y.domain([0, d3.max(data, function(d) { return d.value }) ]);
         yAxis.transition().duration(1000).call(d3.axisLeft(y));
-
         // Create the u variable
         var u = svg.selectAll("rect")
             .data(data)
-
         u
             .enter()
             .append("rect") // Add a new rect for each new elements
@@ -320,7 +317,6 @@
             .attr("width", x.bandwidth())
             .attr("height", function(d) { return height - y(d.value); })
             .attr("fill", color)
-
         // If less group in the new dataset, I delete the ones not in use anymore
         u
             .exit()
@@ -332,6 +328,15 @@
     </script>
 </div>
 
+<div>
+  <p>The above chart reflects what people of different household incomes believe their communities rely on libraries for. People with 
+    a household income less than $30,000 were most likely to believe that their library contributes “a lot” to helping people find 
+    jobs or pursue job training as 25% of people in this income bracket said this. On the other hand, people with a household income 
+    more than $75,000 were the least like two say that their library contributes “a lot” to helping people find jobs or pursue training 
+    with only 18% believing this. People who are already in higher income brackets are more likely to be able to have a full-time, 
+    stable job as well as more resources to use for their job search such as personal computers/laptops and also a larger professional
+     network. </p>
+</div>
 
 <!-- Create a div where the graph will take place -->
 <div id="my_dataviz">    <button onclick="update(data1, '#83e47b')">Sex</button>
@@ -441,3 +446,12 @@
     update(data1, "#83e47b")
 
 </script>
+
+<div>
+  <p>As shown in the above graph, people who have a household income of less than $30,000 were the most likely to say that a library 
+    closing would have a major impact on their community with 41% of respondents in this income bracket saying that. This income 
+    bracket was also the one that was most likely to say that their community relies a lot on the library to find jobs or pursue job 
+    training so with this particular group could potentially find their community suffering from an expanding socioeconomic gap from 
+    people in high income brackets. Without access to a library, people may be unable to find as wide of a variety of jobs and could
+     be missing out on better opportunities because they are no longer accessible to them without the resource of a library.</p>
+</div>
