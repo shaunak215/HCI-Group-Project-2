@@ -169,11 +169,13 @@
     })
     </script>
 
-<button onclick="update(data1)">Sex</button>
-<button onclick="update(data2)">Race</button>
-<button onclick="update(data3)">Age</button>
-<button onclick="update(data4)">Education</button>
-<button onclick="update(data5)">Household Income</button>
+    <button onclick="update(data1, '#83e47b')">Sex</button>
+    <button onclick="update(data2, '#E48DAE')">Race</button>
+    <button onclick="update(data3, '#e4e06a')">Age</button>
+    <button onclick="update(data4, '#e47e50')">Education</button>
+    <button onclick="update(data5, '#61DFE4')">Household Income</button>
+</div>
+
 
 <!-- Create a div where the graph will take place -->
 <div id="my_dataviz"></div>
@@ -243,7 +245,7 @@
 
 
     // A function that create / update the plot for a given variable:
-    function update(data) {
+    function update(data, color) {
 
         // Update the X axis
         x.domain(data.map(function(d) { return d.group; }))
@@ -262,12 +264,12 @@
             .append("rect") // Add a new rect for each new elements
             .merge(u) // get the already existing elements as well
             .transition() // and apply changes to all of them
-            .duration(1000)
+            .duration(1200)
             .attr("x", function(d) { return x(d.group); })
             .attr("y", function(d) { return y(d.value); })
             .attr("width", x.bandwidth())
             .attr("height", function(d) { return height - y(d.value); })
-            .attr("fill", "#69b3a2")
+            .attr("fill", color)
 
         // If less group in the new dataset, I delete the ones not in use anymore
         u
@@ -276,6 +278,6 @@
     }
 
     // Initialize the plot with the first dataset
-    update(data1)
+    update(data1, "#83e47b")
 
 </script>
