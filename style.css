@@ -17,3 +17,8 @@ svg {
     width: 75%;
     margin: 0 auto;
 }
+
+.hanging-indent {
+    padding-left: 22px ;
+    text-indent: -22px ;
+}
