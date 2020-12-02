@@ -1,7 +1,4 @@
-html,
-body {
-  height: 100%;
-}
+body {background-color: lightgray;}
 
 svg {
     display: block;
@@ -16,6 +13,7 @@ svg {
 .text {
     width: 95%;
     margin: 0 auto;
+    padding-top: 1px;
 }
 
 .hanging-indent {
@@ -29,4 +27,10 @@ svg {
     background-color: white;
 }
 
-body {background-color: lightgray;}
+
+.header {
+    width: 85%;
+    margin: 0 auto;
+    background-color: white;
+    text-align: center;
+}
