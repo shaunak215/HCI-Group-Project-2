@@ -55,6 +55,12 @@
             elements[0].parentNode.removeChild(elements[0]);
         }
 
+        elements = container.getElementsByClassName("tick");
+
+        while (elements[0]) {
+            elements[0].parentNode.removeChild(elements[0]);
+        }
+
         // Parse the Data
         d3.csv(data_new, function(data) {
 
@@ -77,7 +83,7 @@
 
             // Add Y axis
             var y = d3.scaleLinear()
-                .domain([0, 120])
+                .domain([0, 100])
                 .range([height, 0]);
             stackedChart.append("g")
                 .call(d3.axisLeft(y));
@@ -115,7 +121,7 @@
                 var subgroupName = d3.select(this.parentNode).datum().key; // This was the tricky part
                 var subgroupValue = d.data[subgroupName];
                 tooltip
-                    .html("subgroup: " + subgroupName + "<br>" + "Value: " + subgroupValue + "%")
+                    .html(subgroupName + "<br>" + subgroupValue + "% of respondents")
                     .style("opacity", 1);
                 // Reduce opacity of all rect to 0.2
                 d3.selectAll(".myRect").style("opacity", 0.2)
@@ -171,6 +177,13 @@
                 .on("mouseover", mouseover)
                 .on("mousemove", mousemove)
                 .on("mouseleave", mouseleave)
+            stackedChart.append("text")
+                .attr("transform", "rotate(-90)")
+                .attr("y", 0 - margin.left)
+                .attr("x",0 - (height / 2))
+                .attr("dy", "1em")
+                .style("text-anchor", "middle")
+                .text("Percent Respondents");
 
         })
 
@@ -285,7 +298,7 @@
         .attr("x",0 - (height / 2))
         .attr("dy", "1em")
         .style("text-anchor", "middle")
-        .text("% of \"major impact\" responses"); 
+        .text("% of \"major impact\" responses");
 
 
     // A function that create / update the plot for a given variable:
