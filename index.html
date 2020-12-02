@@ -23,10 +23,12 @@
 </div>
 
 <div id="stacked_chart">
-    <button onclick="stacked_update('Data/q18a.csv')">Job Training</button>
-    <button onclick="stacked_update('Data/q18b.csv')">Health Information</button>
-    <button onclick="stacked_update('Data/q18c.csv')">Information to Trust</button>
-    <button onclick="stacked_update('Data/q18d.csv')">Major Disaster</button>
+    <div class="buttons">
+        <button onclick="stacked_update('Data/q18a.csv')">Job Training</button>
+        <button onclick="stacked_update('Data/q18b.csv')">Health Information</button>
+        <button onclick="stacked_update('Data/q18c.csv')">Information to Trust</button>
+        <button onclick="stacked_update('Data/q18d.csv')">Major Disaster</button>
+    </div>
 </div>
 <script>
     // set the dimensions and margins of the graph
@@ -124,7 +126,7 @@
 
             var mousemove = function(d) {
                 tooltip
-                    .style("left", (d3.mouse(this)[0]) + "px") // It is important to put the +90: other wise the tooltip is exactly where the point is an it creates a weird effect
+                    .style("left", (d3.mouse(this)[0]+180) + "px") // It is important to put the +90: other wise the tooltip is exactly where the point is an it creates a weird effect
                     .style("top", (d3.mouse(this)[1]+200) + "px")
             }
 
@@ -204,11 +206,13 @@
 
 <!-- Create a div where the graph will take place -->
 <div id="my_dataviz">
+    <div class="buttons">
     <button onclick="update(data1, '#83e47b')">Sex</button>
     <button onclick="update(data2, '#E48DAE')">Race</button>
     <button onclick="update(data3, '#e4e06a')">Age</button>
     <button onclick="update(data4, '#e47e50')">Education</button>
     <button onclick="update(data5, '#61DFE4')">Household Income</button></div>
+</div>
 <script>
 
     // create 2 data_set

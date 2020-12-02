@@ -7,3 +7,7 @@ svg {
     display: block;
     margin: 0 auto;
 }
+
+.buttons {
+    padding-left: 200px;
+}
