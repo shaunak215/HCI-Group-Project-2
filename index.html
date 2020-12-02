@@ -278,6 +278,16 @@
         .attr("class", "myYaxis")
 
 
+    // text label for the y axis
+    svg.append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 0 - margin.left)
+        .attr("x",0 - (height / 2))
+        .attr("dy", "1em")
+        .style("text-anchor", "middle")
+        .text("% of \"major impact\" responses"); 
+
+
     // A function that create / update the plot for a given variable:
     function update(data, color) {
 
@@ -288,19 +298,6 @@
         // Update the Y axis
         y.domain([0, d3.max(data, function(d) { return d.value }) ]);
         yAxis.transition().duration(1000).call(d3.axisLeft(y));
-
-          // Add the y Axis
-        svg.append("g")
-            .call(d3.axisLeft(y));
-
-        // text label for the y axis
-        svg.append("text")
-            .attr("transform", "rotate(-90)")
-            .attr("y", 0 - margin.left)
-            .attr("x",0 - (height / 2))
-            .attr("dy", "1em")
-            .style("text-anchor", "middle")
-            .text("% of \"major impact\" responses"); 
 
         // Create the u variable
         var u = svg.selectAll("rect")
