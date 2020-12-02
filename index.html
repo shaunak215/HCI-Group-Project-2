@@ -21,67 +21,6 @@
         played for different income groups and the impact that a library closing would have on a community.
     </p>
 </div>
-<!-- Create a div where the graph will take place -->
-<div id="bar_chart" hidden="true" ></div>
-<script>
-    // set the dimensions and margins of the graph
-    var margin = {top: 10, right: 30, bottom: 90, left: 40},
-        width = 600 - margin.left - margin.right,
-        height = 450 - margin.top - margin.bottom;
-
-    // append the barChart object to the body of the page
-    var barChart = d3.select("#bar_chart")
-      .append("svg")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
-      .append("g")
-        .attr("transform",
-              "translate(" + margin.left + "," + margin.top + ")");
-
-    // Parse the Data
-    d3.csv("Data/test_data.csv", function(data) {
-
-    // X axis
-    var x = d3.scaleBand()
-      .range([ 0, width ])
-      .domain(data.map(function(d) { return d.Country; }))
-      .padding(0.2);
-    barChart.append("g")
-      .attr("transform", "translate(0," + height + ")")
-      .call(d3.axisBottom(x))
-      .selectAll("text")
-        .attr("transform", "translate(-10,0)rotate(-45)")
-        .style("text-anchor", "end");
-
-    // Y axis
-    var y = d3.scaleLinear()
-      .domain([0, 13000])
-      .range([ height, 0]);
-    barChart.append("g")
-      .call(d3.axisLeft(y));
-
-    // Bars
-    barChart.selectAll("mybar")
-      .data(data)
-      .enter()
-      .append("rect")
-        .attr("x", function(d) { return x(d.Country); })
-        .attr("width", x.bandwidth())
-        .attr("fill", "#69b3a2")
-        // no bar at the beginning thus:
-        .attr("height", function(d) { return height - y(0); }) // always equal to 0
-        .attr("y", function(d) { return y(0); })
-
-    // Animation
-    barChart.selectAll("rect")
-      .transition()
-      .duration(800)
-      .attr("y", function(d) { return y(d.Value); })
-      .attr("height", function(d) { return height - y(d.Value); })
-      .delay(function(d,i){console.log(i) ; return(i*100)})
-
-    })
-    </script>
 
 <div id="stacked_chart">
     <button onclick="stacked_update('Data/q18a.csv')">Job Training</button>
@@ -91,8 +30,8 @@
 </div>
 <script>
     // set the dimensions and margins of the graph
-    var margin = {top: 10, right: 30, bottom: 20, left: 40},
-        width = 600 - margin.left - margin.right,
+    var margin = {top: 30, right: 30, bottom: 70, left: 60},
+        width = 460 - margin.left - margin.right,
         height = 400 - margin.top - margin.bottom;
 
     // append the stackedChart object to the body of the page
@@ -185,7 +124,7 @@
 
             var mousemove = function(d) {
                 tooltip
-                    .style("left", (d3.mouse(this)[0]+90) + "px") // It is important to put the +90: other wise the tooltip is exactly where the point is an it creates a weird effect
+                    .style("left", (d3.mouse(this)[0]) + "px") // It is important to put the +90: other wise the tooltip is exactly where the point is an it creates a weird effect
                     .style("top", (d3.mouse(this)[1]+200) + "px")
             }
 
@@ -264,7 +203,8 @@
 </div>
 
 <!-- Create a div where the graph will take place -->
-<div id="my_dataviz">    <button onclick="update(data1, '#83e47b')">Sex</button>
+<div id="my_dataviz">
+    <button onclick="update(data1, '#83e47b')">Sex</button>
     <button onclick="update(data2, '#E48DAE')">Race</button>
     <button onclick="update(data3, '#e4e06a')">Age</button>
     <button onclick="update(data4, '#e47e50')">Education</button>
