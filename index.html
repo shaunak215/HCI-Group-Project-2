@@ -138,8 +138,8 @@
 
                 var mousemove = function(d) {
                     tooltip
-                        .style("left", (d3.mouse(this)[0]+480) + "px") // It is important to put the +90: other wise the tooltip is exactly where the point is an it creates a weird effect
-                        .style("top", (d3.mouse(this)[1]+190) + "px")
+                        .style("left", (d3.mouse(this)[0]+550) + "px") // It is important to put the +90: other wise the tooltip is exactly where the point is an it creates a weird effect
+                        .style("top", (d3.mouse(this)[1]+320) + "px")
                 }
 
                 // When user do not hover anymore
@@ -224,7 +224,7 @@
 
     <!-- Create a div where the graph will take place -->
     <div id="my_dataviz">
-        <div class="buttons">
+        <div class="buttons2">
         <button onclick="update(data1, '#83e47b')">Sex</button>
         <button onclick="update(data2, '#E48DAE')">Race</button>
         <button onclick="update(data3, '#e4e06a')">Age</button>
