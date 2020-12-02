@@ -9,5 +9,6 @@ svg {
 }
 
 .buttons {
-    padding-left: 200px;
+    width: 460px;
+    margin: 0 auto;
 }
