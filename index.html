@@ -9,6 +9,18 @@
 <script src="https://d3js.org/d3.v4.js"></script>
 <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
 
+<div>
+    <p>
+        Currently different demographics and communities use libraries vastly differently. We wanted to explore reasons
+        for these differences and understand how valuable a library is to different communities, or the lack thereof.
+        The Pew Research Center conducted surveys from March 7 - April 6 2016 by polling 1601 adults aged 16 and older.
+        The questions they asked related to
+        technology use, information needs, and Americans’ use of libraries and library resources. From the survey results
+        we aimed to identify how different socioeconomic groups and demographic groups utilize these libraries
+        and the disparities that arise between them. While there were many findings we wanted to focus on the role that libraries
+        played for different income groups and the impact that a library closing would have on a community. 
+    </p>
+</div>
 <!-- Create a div where the graph will take place -->
 <div id="bar_chart" hidden="true" ></div>
 <script>
@@ -16,7 +28,7 @@
     var margin = {top: 10, right: 30, bottom: 90, left: 40},
         width = 600 - margin.left - margin.right,
         height = 450 - margin.top - margin.bottom;
-    
+
     // append the barChart object to the body of the page
     var barChart = d3.select("#bar_chart")
       .append("svg")
@@ -25,10 +37,10 @@
       .append("g")
         .attr("transform",
               "translate(" + margin.left + "," + margin.top + ")");
-    
+
     // Parse the Data
     d3.csv("Data/test_data.csv", function(data) {
-    
+
     // X axis
     var x = d3.scaleBand()
       .range([ 0, width ])
@@ -40,14 +52,14 @@
       .selectAll("text")
         .attr("transform", "translate(-10,0)rotate(-45)")
         .style("text-anchor", "end");
-    
+
     // Y axis
     var y = d3.scaleLinear()
       .domain([0, 13000])
       .range([ height, 0]);
     barChart.append("g")
       .call(d3.axisLeft(y));
-    
+
     // Bars
     barChart.selectAll("mybar")
       .data(data)
@@ -59,7 +71,7 @@
         // no bar at the beginning thus:
         .attr("height", function(d) { return height - y(0); }) // always equal to 0
         .attr("y", function(d) { return y(0); })
-    
+
     // Animation
     barChart.selectAll("rect")
       .transition()
@@ -67,7 +79,7 @@
       .attr("y", function(d) { return y(d.Value); })
       .attr("height", function(d) { return height - y(d.Value); })
       .delay(function(d,i){console.log(i) ; return(i*100)})
-    
+
     })
     </script>
 
@@ -82,7 +94,7 @@
     var margin = {top: 10, right: 30, bottom: 20, left: 40},
         width = 600 - margin.left - margin.right,
         height = 400 - margin.top - margin.bottom;
-    
+
     // append the stackedChart object to the body of the page
     var stackedChart = d3.select("#stacked_chart")
       .append("svg")
@@ -92,7 +104,7 @@
         .append("g")
         .attr("transform",
               "translate(" + margin.left + "," + margin.top + ")");
-    
+
     // Parse the Data
     d3.csv("Data/q18a.csv", function(data) {
 
@@ -186,7 +198,7 @@
             .attr("stroke", "grey")
             .on("mouseover", mouseover)
             .on("mouseleave", mouseleave)
-    
+
     })
 
     // A function that create / update the plot for a given variable:
@@ -330,22 +342,22 @@
 
 <div>
   <p>
-    The above chart reflects what people of different household incomes believe their communities rely on libraries for. People with 
-    a household income less than $30,000 were most likely to believe that their library contributes “a lot” to helping people find 
-    jobs or pursue job training as 25% of people in this income bracket said this. On the other hand, people with a household income 
-    more than $75,000 were the least like two say that their library contributes “a lot” to helping people find jobs or pursue training 
-    with only 18% believing this. People who are already in higher income brackets are more likely to be able to have a full-time, 
+    The above chart reflects what people of different household incomes believe their communities rely on libraries for. People with
+    a household income less than $30,000 were most likely to believe that their library contributes “a lot” to helping people find
+    jobs or pursue job training as 25% of people in this income bracket said this. On the other hand, people with a household income
+    more than $75,000 were the least like two say that their library contributes “a lot” to helping people find jobs or pursue training
+    with only 18% believing this. People who are already in higher income brackets are more likely to be able to have a full-time,
     stable job as well as more resources to use for their job search such as personal computers/laptops and also a larger professional
-     network. 
+     network.
   </p>
   <p>
-    Additionally, as displayed in the figure above shows that the three income brackets of less than $30,000, $30,000-$49,999, and 
-    $50,000-$74,999 were all equally likely to think that their public library contributes “a lot” in terms of helping people when 
+    Additionally, as displayed in the figure above shows that the three income brackets of less than $30,000, $30,000-$49,999, and
+    $50,000-$74,999 were all equally likely to think that their public library contributes “a lot” in terms of helping people when
     they see health information with 36% saying this in each income bracket. However, only 24% of people with a household income of
-     more than $75,000 believed the library contributed a lot in regards to getting health information. The people who are in 
-     significantly higher income brackets are more likely to have health insurance and also be able to afford any costs associated 
-     with medical visits and treatments. However people who do not have as high of a household income can not afford unexpected 
-     health related costs so they are more likely to rely on public resources like the library to find information about their health 
+     more than $75,000 believed the library contributed a lot in regards to getting health information. The people who are in
+     significantly higher income brackets are more likely to have health insurance and also be able to afford any costs associated
+     with medical visits and treatments. However people who do not have as high of a household income can not afford unexpected
+     health related costs so they are more likely to rely on public resources like the library to find information about their health
      issues and find ways to minimize costs associated with it.
   </p>
 </div>
@@ -460,15 +472,19 @@
 </script>
 
 <div>
-  <p>As shown in the above graph, people who have a household income of less than $30,000 were the most likely to say that a library 
-    closing would have a major impact on their community with 41% of respondents in this income bracket saying that. This income 
-    bracket was also the one that was most likely to say that their community relies a lot on the library to find jobs or pursue job 
-    training so with this particular group could potentially find their community suffering from an expanding socioeconomic gap from 
-    people in high income brackets. Without access to a library, people may be unable to find as wide of a variety of jobs and could
-     be missing out on better opportunities because they are no longer accessible to them without the resource of a library. This would 
-    also likely have an effect on the overall health of people with lower incomes in the community because many of them reported that  
+  <p>As shown in the above graph, people who have a household income of less than $30,000 were the most likely to say that a library
+    closing would have a major impact on their community with 41% of respondents in this income bracket saying that. This income
+    bracket was also the one that was most likely to say that their community relies a lot on the library to find jobs or pursue job
+    training so with this particular group could potentially find their community suffering from an expanding socioeconomic gap from
+    people in high income brackets.  It is also important to see that older people, especially 40% of those in the age range from 50-64 stated that a closed library
+    would have a major impact on their community. Especially during COVID-19 when libraries are closed, this presents a difficult problem
+    to people in that age range as it is hard for them to adopt new technologies which could give them the information that libraries do.
+    Without access to a library, people may be unable to find as wide of a variety of jobs and could
+    be missing out on better opportunities because they are no longer accessible to them without the resource of a library. This would
+    also likely have an effect on the overall health of people with lower incomes in the community because many of them reported that
     the library is a community that is used "a lot" to seek out health-related information. If the public library were closed, this
-    people would be cut off from access to resources that allow them to find adequate medical attention that they can afford. This 
+    people would be cut off from access to resources that allow them to find adequate medical attention that they can afford. This
     would likely result in a lack of seekiing medical attention, hurting the health of the community, or force low-income households
-    to go into debt as a result of high, unexpected medical fees. </p>
+    to go into debt as a result of high, unexpected medical fees.
+  </p>
 </div>
