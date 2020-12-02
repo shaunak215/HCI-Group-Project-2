@@ -88,120 +88,140 @@
       .append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
-        .attr("id", "svgID")
         .append("g")
         .attr("transform",
               "translate(" + margin.left + "," + margin.top + ")");
     
-    // Parse the Data
-    d3.csv("Data/q18a.csv", function(data) {
-
-        // List of subgroups = header of the csv files = soil condition here
-        var subgroups = data.columns.slice(1)
-
-        // List of groups = species here = value of the first column called group -> I show them on the X axis
-        var groups = d3.map(data, function (d) {
-            return (d.group)
-        }).keys()
-
-        // Add X axis
-        var x = d3.scaleBand()
-            .domain(groups)
-            .range([0, width])
-            .padding([0.2])
-        stackedChart.append("g")
-            .attr("transform", "translate(0," + height + ")")
-            .call(d3.axisBottom(x).tickSizeOuter(0));
-
-        // Add Y axis
-        var y = d3.scaleLinear()
-            .domain([0, 120])
-            .range([height, 0]);
-        stackedChart.append("g")
-            .call(d3.axisLeft(y));
-
-        // color palette = one color per subgroup
-        var color = d3.scaleOrdinal()
-            .domain(subgroups)
-            .range(d3.schemeSet2);
-
-        //stack the data? --> stack per subgroup
-        var stackedData = d3.stack()
-            .keys(subgroups)
-            (data)
-        // ----------------
-        // Highlight a specific subgroup when hovered
-        // ----------------
-
-        // What happens when user hover a bar
-        var mouseover = function (d) {
-            // what subgroup are we hovering?
-            var subgroupName = d3.select(this.parentNode).datum().key; // This was the tricky part
-            var subgroupValue = d.data[subgroupName];
-            // Reduce opacity of all rect to 0.2
-            d3.selectAll(".myRect").style("opacity", 0.2)
-            // Highlight all rects of this subgroup with opacity 0.8. It is possible to select them since they have a specific class = their name.
-            d3.selectAll("." + subgroupName)
-                .style("opacity", 1)
-        }
-
-        //TODO: Add tooltip here to name subgroup on hover
-        //TODO: Adjust y-axis slightly
-
-        // When user do not hover anymore
-        var mouseleave = function (d) {
-            // Back to normal opacity: 0.8
-            d3.selectAll(".myRect")
-                .style("opacity", 0.8)
-        }
-
-        // Show the bars
-        stackedChart.append("g")
-            .selectAll("g")
-            // Enter in the stack data = loop key per key = group per group
-            .data(stackedData)
-            .enter().append("g")
-            .attr("fill", function (d) {
-                return color(d.key);
-            })
-            .attr("class", function (d) {
-                return "myRect " + d.key
-            }) // Add a class to each subgroup: their name
-            .selectAll("rect")
-            // enter a second time = loop subgroup per subgroup to add all rectangles
-            .data(function (d) {
-                return d;
-            })
-            .enter().append("rect")
-            .attr("x", function (d) {
-                return x(d.data.group);
-            })
-            .attr("y", function (d) {
-                return y(d[1]);
-            })
-            .attr("height", function (d) {
-                return y(d[0]) - y(d[1]);
-            })
-            .attr("width", x.bandwidth())
-            .attr("stroke", "grey")
-            .on("mouseover", mouseover)
-            .on("mouseleave", mouseleave)
-    
-    })
+    // // Parse the Data
+    // d3.csv("Data/q18a.csv", function(data) {
+    //
+    //     // List of subgroups = header of the csv files = soil condition here
+    //     var subgroups = data.columns.slice(1)
+    //
+    //     // List of groups = species here = value of the first column called group -> I show them on the X axis
+    //     var groups = d3.map(data, function (d) {
+    //         return (d.group)
+    //     }).keys()
+    //
+    //     // Add X axis
+    //     var x = d3.scaleBand()
+    //         .domain(groups)
+    //         .range([0, width])
+    //         .padding([0.2])
+    //     stackedChart.append("g")
+    //         .attr("transform", "translate(0," + height + ")")
+    //         .call(d3.axisBottom(x).tickSizeOuter(0));
+    //
+    //     // Add Y axis
+    //     var y = d3.scaleLinear()
+    //         .domain([0, 120])
+    //         .range([height, 0]);
+    //     stackedChart.append("g")
+    //         .call(d3.axisLeft(y));
+    //
+    //     // color palette = one color per subgroup
+    //     var color = d3.scaleOrdinal()
+    //         .domain(subgroups)
+    //         .range(d3.schemeSet2);
+    //
+    //     //stack the data? --> stack per subgroup
+    //     var stackedData = d3.stack()
+    //         .keys(subgroups)
+    //         (data)
+    //
+    //     // Create a tooltip
+    //     // ----------------
+    //     var tooltip = d3.select("#stacked_chart")
+    //         .append("div")
+    //         .style("opacity", 0)
+    //         .attr("class", "tooltip")
+    //         .style("background-color", "white")
+    //         .style("border", "solid")
+    //         .style("border-width", "1px")
+    //         .style("border-radius", "5px")
+    //         .style("padding", "10px")
+    //         .style("position","absolute");
+    //
+    //     // ----------------
+    //     // Highlight a specific subgroup when hovered
+    //     // ----------------
+    //
+    //     // What happens when user hover a bar
+    //     var mouseover = function (d) {
+    //         // what subgroup are we hovering?
+    //         var subgroupName = d3.select(this.parentNode).datum().key; // This was the tricky part
+    //         var subgroupValue = d.data[subgroupName];
+    //         tooltip
+    //             .html("subgroup: " + subgroupName + "<br>" + "Value: " + subgroupValue + "%")
+    //             .style("opacity", 1);
+    //         // Reduce opacity of all rect to 0.2
+    //         d3.selectAll(".myRect").style("opacity", 0.2)
+    //         // Highlight all rects of this subgroup with opacity 0.8. It is possible to select them since they have a specific class = their name.
+    //         d3.selectAll("." + subgroupName)
+    //             .style("opacity", 1)
+    //     }
+    //
+    //     var mousemove = function(d) {
+    //         tooltip
+    //             .style("left", (d3.mouse(this)[0]+90) + "px") // It is important to put the +90: other wise the tooltip is exactly where the point is an it creates a weird effect
+    //             .style("top", (d3.mouse(this)[1]) + "px")
+    //     }
+    //
+    //     // When user do not hover anymore
+    //     var mouseleave = function (d) {
+    //         tooltip
+    //             .style("opacity", 0)
+    //         // Back to normal opacity: 0.8
+    //         d3.selectAll(".myRect")
+    //             .style("opacity", 0.8)
+    //     }
+    //
+    //     // Show the bars
+    //     stackedChart.append("g")
+    //         .selectAll("g")
+    //         // Enter in the stack data = loop key per key = group per group
+    //         .data(stackedData)
+    //         .enter().append("g")
+    //         .attr("fill", function (d) {
+    //             return color(d.key);
+    //         })
+    //         .attr("class", function (d) {
+    //             return "myRect " + d.key
+    //         }) // Add a class to each subgroup: their name
+    //         .selectAll("rect")
+    //         // enter a second time = loop subgroup per subgroup to add all rectangles
+    //         .data(function (d) {
+    //             return d;
+    //         })
+    //         .enter().append("rect")
+    //         .attr("x", function (d) {
+    //             return x(d.data.group);
+    //         })
+    //         .attr("y", function (d) {
+    //             return y(d[1]);
+    //         })
+    //         .attr("height", function (d) {
+    //             return y(d[0]) - y(d[1]);
+    //         })
+    //         .attr("width", x.bandwidth())
+    //         .attr("stroke", "grey")
+    //         .on("mouseover", mouseover)
+    //         .on("mousemove", mousemove)
+    //         .on("mouseleave", mouseleave)
+    //
+    // })
 
     // A function that create / update the plot for a given variable:
     function stacked_update(data_new) {
 
-        //TODO: figure out how to remove graph that's already there
-        // stackedChart = d3.select("#stacked_chart")
-        //     .append("svg")
-        //     .attr("width", width + margin.left + margin.right)
-        //     .attr("height", height + margin.top + margin.bottom)
-        //     .append("g")
-        //     .attr("transform",
-        //         "translate(" + margin.left + "," + margin.top + ")");
+        let container = document.getElementById("stacked_chart");
+        let elements = container.getElementsByClassName("myRect");
 
+        while (elements[0]) {
+            elements[0].parentNode.removeChild(elements[0]);
+        }
 
+        // Parse the Data
         d3.csv(data_new, function(data) {
 
             // List of subgroups = header of the csv files = soil condition here
@@ -237,6 +257,20 @@
             var stackedData = d3.stack()
                 .keys(subgroups)
                 (data)
+
+            // Create a tooltip
+            // ----------------
+            var tooltip = d3.select("#stacked_chart")
+                .append("div")
+                .style("opacity", 0)
+                .attr("class", "tooltip")
+                .style("background-color", "white")
+                .style("border", "solid")
+                .style("border-width", "1px")
+                .style("border-radius", "5px")
+                .style("padding", "10px")
+                .style("position","absolute");
+
             // ----------------
             // Highlight a specific subgroup when hovered
             // ----------------
@@ -246,6 +280,9 @@
                 // what subgroup are we hovering?
                 var subgroupName = d3.select(this.parentNode).datum().key; // This was the tricky part
                 var subgroupValue = d.data[subgroupName];
+                tooltip
+                    .html("subgroup: " + subgroupName + "<br>" + "Value: " + subgroupValue + "%")
+                    .style("opacity", 1);
                 // Reduce opacity of all rect to 0.2
                 d3.selectAll(".myRect").style("opacity", 0.2)
                 // Highlight all rects of this subgroup with opacity 0.8. It is possible to select them since they have a specific class = their name.
@@ -253,11 +290,16 @@
                     .style("opacity", 1)
             }
 
-            //TODO: Add tooltip here to name subgroup on hover
-            //TODO: Adjust y-axis slightly
+            var mousemove = function(d) {
+                tooltip
+                    .style("left", (d3.mouse(this)[0]+90) + "px") // It is important to put the +90: other wise the tooltip is exactly where the point is an it creates a weird effect
+                    .style("top", (d3.mouse(this)[1]) + "px")
+            }
 
             // When user do not hover anymore
             var mouseleave = function (d) {
+                tooltip
+                    .style("opacity", 0)
                 // Back to normal opacity: 0.8
                 d3.selectAll(".myRect")
                     .style("opacity", 0.8)
@@ -293,38 +335,14 @@
                 .attr("width", x.bandwidth())
                 .attr("stroke", "grey")
                 .on("mouseover", mouseover)
+                .on("mousemove", mousemove)
                 .on("mouseleave", mouseleave)
 
         })
-
-       /* // Update the X axis
-        x.domain(data.map(function(d) { return d.group; }))
-        xAxis.call(d3.axisBottom(x))
-        // Update the Y axis
-        y.domain([0, d3.max(data, function(d) { return d.value }) ]);
-        yAxis.transition().duration(1000).call(d3.axisLeft(y));
-        // Create the u variable
-        var u = svg.selectAll("rect")
-            .data(data)
-        u
-            .enter()
-            .append("rect") // Add a new rect for each new elements
-            .merge(u) // get the already existing elements as well
-            .transition() // and apply changes to all of them
-            .duration(1200)
-            .attr("x", function(d) { return x(d.group); })
-            .attr("y", function(d) { return y(d.value); })
-            .attr("width", x.bandwidth())
-            .attr("height", function(d) { return height - y(d.value); })
-            .attr("fill", color)
-        // If less group in the new dataset, I delete the ones not in use anymore
-        u
-            .exit()
-            .remove()*/
     }
 
     // Initialize the plot with the first dataset
-    stacked_update(data1, "#83e47b")
+    stacked_update('Data/q18a.csv')
     </script>
 </div>
 
